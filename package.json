@@ -1,0 +1,59 @@
+{
+  "name": "demovela-mcp",
+  "version": "1.0.0",
+  "description": "Demovela MCP connector for Claude Desktop and other stdio clients",
+  "type": "module",
+  "bin": {
+    "demovela-mcp": "server/index.js"
+  },
+  "files": [
+    "server",
+    "icon.png",
+    "manifest.json",
+    "server.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "node server/index.js",
+    "test": "node --test test/*.test.mjs",
+    "bundle": "mcpb pack . demovela.mcpb"
+  },
+  "dependencies": {
+    "mcp-remote": "0.14.2"
+  },
+  "devDependencies": {
+    "@anthropic-ai/mcpb": "2.1.2"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "author": "Codex",
+  "contributors": [
+    {
+      "name": "Codex"
+    }
+  ],
+  "license": "MIT",
+  "homepage": "https://demovela.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/demovela/mcp-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/demovela/mcp-server/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "mcp",
+    "claude",
+    "desktop",
+    "demovela"
+  ],
+  "mcpName": "io.github.demovela/mcp-server",
+  "overrides": {
+    "tmp": "^0.2.6"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "manifest_version": "0.3",
+  "name": "demovela",
+  "display_name": "Demovela",
+  "version": "1.1.0",
+  "description": "Connect your Demovela account to an MCP client.",
+  "long_description": "get_profile reads your account email and workspace ID. list_templates browses the template catalogue. These tools do not record websites, access private recordings, render videos or spend credits.",
+  "author": {
+    "name": "Codex"
+  },
+  "homepage": "https://demovela.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/demovela/mcp-server"
+  },
+  "icon": "icon.png",
+  "server": {
+    "type": "node",
+    "entry_point": "server/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": [
+        "${__dirname}/server/index.js"
+      ]
+    }
+  },
+  "compatibility": {
+    "platforms": [
+      "darwin",
+      "win32",
+      "linux"
+    ],
+    "runtimes": {
+      "node": ">=22"
+    }
+  },
+  "license": "MIT"
+}

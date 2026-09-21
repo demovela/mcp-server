@@ -1,0 +1,6 @@
+{
+  "brand": "Demovela",
+  "endpoint": "https://mcp.demovela.com/mcp",
+  "version": "1.2.0",
+  "scope": "profile:read videos:read drafts:write"
+}

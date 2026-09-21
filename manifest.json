@@ -1,0 +1,38 @@
+{
+  "manifest_version": "0.3",
+  "name": "demovela",
+  "display_name": "Demovela",
+  "version": "1.2.0",
+  "description": "Connect your Demovela account to an MCP client.",
+  "long_description": "get_profile and list_templates provide account and template context. list_videos, get_video and get_video_status read existing outputs. create_video_draft saves a brief for review without recording, rendering or spending credits.",
+  "author": {
+    "name": "Codex"
+  },
+  "homepage": "https://demovela.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/demovela/mcp-server"
+  },
+  "icon": "icon.png",
+  "server": {
+    "type": "node",
+    "entry_point": "server/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": [
+        "${__dirname}/server/index.js"
+      ]
+    }
+  },
+  "compatibility": {
+    "platforms": [
+      "darwin",
+      "win32",
+      "linux"
+    ],
+    "runtimes": {
+      "node": ">=22"
+    }
+  },
+  "license": "MIT"
+}

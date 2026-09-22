@@ -1,0 +1,47 @@
+name: Publish official MCP Registry listing
+on:
+  push:
+    branches: [main]
+    paths: [server.json, .github/workflows/registry.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: mcp-registry-publish
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Wait for published npm artifact
+        run: |
+          node --input-type=module <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const p=JSON.parse(readFileSync('package.json'));
+          for(let attempt=0;attempt<20;attempt++) {
+            const response=await fetch(`https://registry.npmjs.org/${p.name}/${p.version}`);
+            if(response.ok){const published=await response.json();if(published.mcpName!==p.mcpName)throw Error('MCP ownership mismatch');process.exit(0);}
+            if(response.status!==404)throw Error(`Registry returned ${response.status}`);
+            await new Promise(resolve=>setTimeout(resolve,30000));
+          }
+          throw Error('npm version is not available yet; rerun after publication');
+          NODE
+      - name: Install official publisher
+        run: |
+          curl --fail --location --retry 3 -o publisher.tar.gz https://github.com/modelcontextprotocol/registry/releases/download/v1.8.1/mcp-publisher_linux_amd64.tar.gz
+          curl --fail --location --retry 3 -o checksums.txt https://github.com/modelcontextprotocol/registry/releases/download/v1.8.1/registry_1.8.1_checksums.txt
+          grep '  mcp-publisher_linux_amd64.tar.gz$' checksums.txt | sed 's/mcp-publisher_linux_amd64.tar.gz/publisher.tar.gz/' | sha256sum --check
+          tar xzf publisher.tar.gz mcp-publisher
+      - name: Authenticate as this organization repository
+        run: ./mcp-publisher login github-oidc
+      - name: Validate listing
+        run: ./mcp-publisher validate
+      - name: Publish listing
+        run: ./mcp-publisher publish

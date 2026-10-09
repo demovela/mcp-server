@@ -1,0 +1,38 @@
+{
+  "manifest_version": "0.3",
+  "name": "demovela",
+  "display_name": "Demovela",
+  "version": "1.2.1",
+  "description": "MCP connector for Demovela video libraries, render status, templates and reviewable video briefs.",
+  "long_description": "Demovela helps founders and product marketers show how a product actually works. Start with a supported product URL: the video agent explores the workflow, captures real desktop and mobile footage, and prepares demos and marketing cuts. Review the output library and direct the next edit in chat, keeping original recordings available for later versions. get_profile and list_templates provide account and template context. list_videos, get_video and get_video_status read existing outputs. create_video_draft saves a brief for review without recording, rendering or spending credits. The MCP browses existing work and saves briefs. It does not record a browser session, render a video, generate media or spend credits. A draft is not a finished video. The product\u2019s current recording preview supports a limited set of products; consult the preview scope before starting. Download links can require product sign-in.",
+  "author": {
+    "name": "Codex"
+  },
+  "homepage": "https://demovela.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/demovela/mcp-server"
+  },
+  "icon": "icon.png",
+  "server": {
+    "type": "node",
+    "entry_point": "server/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": [
+        "${__dirname}/server/index.js"
+      ]
+    }
+  },
+  "compatibility": {
+    "platforms": [
+      "darwin",
+      "win32",
+      "linux"
+    ],
+    "runtimes": {
+      "node": ">=22"
+    }
+  },
+  "license": "MIT"
+}

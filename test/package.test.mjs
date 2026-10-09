@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {spawnSync} from 'node:child_process';
+import {createRequire} from 'node:module';
+const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url),'utf8'));
+test('package, extension and registry versions agree',()=>{const p=read('package.json');for(const f of ['manifest.json','server/config.json','server.json'])assert.equal(read(f).version,p.version);assert.equal(read('server.json').packages[0].identifier,p.name);});
+test('desktop entry point works without authentication for help and version',()=>{for(const flag of ['--help','--version']){const p=spawnSync(process.execPath,['server/index.js',flag],{encoding:'utf8'});assert.equal(p.status,0,p.stderr);assert.ok(p.stdout.length);}});
+test('no caller-supplied endpoint or shell commands',()=>{const p=spawnSync(process.execPath,['server/index.js','https://example.com'],{encoding:'utf8'});assert.equal(p.status,2);assert.match(read('server/config.json').endpoint,/^https:\/\//);});
+test('pinned bridge entry point is installed',()=>{assert.ok(createRequire(import.meta.url).resolve('mcp-remote/dist/proxy.js'));assert.equal(read('package.json').dependencies['mcp-remote'],'0.14.2');});

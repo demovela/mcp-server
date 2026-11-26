@@ -1,0 +1,7 @@
+.git/
+.github/
+test/
+scripts/
+*.mcpb
+*.tgz
+.env*
